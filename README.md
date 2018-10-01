@@ -45,5 +45,7 @@ The device should go to sleep after, say, 30 seconds or so.
 - throw-away camera and housing (found one for 1€ at a flea market)
 - NodeMCU ESP3266 (4-7€)
 - camera module (4-7€)
+- SD card reader module (1-4€)
+- SD card (3-6€)
 - 9V rechargeable battery (2-5€)
 - wires, little switch, hot glue (of course!), battery clip... (?€)
