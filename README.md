@@ -1,8 +1,8 @@
 # throwaway-camera-upgrade
-I want to upgrade a throw-away underwater camera using ESP8266.
+I want to upgrade a disposable underwater camera using ESP8266.
 
 ## What do we have here?
-We have here an old throw-away camera with waterproof housing which will never take a picture again, as there are no films available for it any more.
+We have here an old disposable camera with waterproof housing which will never take a picture again, as there are no films available for it any more.
 
 ## What do we want?
 Taking pictures again! Underwater! Everywhere!
@@ -42,7 +42,7 @@ A step-up-converter can be used to provide 5V stable, driven by a 9V rechargeabl
 The device should go to sleep after, say, 30 seconds or so.
 
 ### Parts
-- throw-away camera and housing (found one for 1€ at a flea market)
+- disposable camera and housing (found one for 1€ at a flea market)
 - NodeMCU ESP3266 (4-7€)
 - camera module (4-7€)
 - SD card reader module (1-4€)
