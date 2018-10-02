@@ -48,4 +48,4 @@ The device should go to sleep after, say, 30 seconds or so.
 - SD card reader module (1-4€)
 - SD card (3-6€)
 - 9V rechargeable battery (2-5€)
-- wires, little switch, hot glue (of course!), battery clip... (?€)
+- wires, little switch, hot glue (of course!), battery clip, some LEDs and resistors, ... (?€)
