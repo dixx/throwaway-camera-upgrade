@@ -1,10 +1,11 @@
 #include "Arduino.h"
+#include "core.h"
 #include "Storage.h"
 
 Storage storage;
 
 void setup() {
-    Serial.begin(115200);
+    webupdater::init();
     storage.init();
     if (storage.is_ready()) {
         storage.write_text("example.txt", "This is a test.\näöüß\n\tè^°");
@@ -14,4 +15,5 @@ void setup() {
 }
 
 void loop() {
+    webserver::server.handleClient();
 }
