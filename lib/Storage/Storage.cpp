@@ -14,9 +14,7 @@ void Storage::init()
 
 void Storage::read_text(const String& filename) {
     if (!ready) return;
-    Serial.println("Reading ");
-    Serial.println(filename);
-    Serial.println("-->");
+    Serial.println(String("Reading ") + filename + "-->");
     File file = SD.open(filename);
     if (!file) {
         Serial.println("opening file failed!");
@@ -31,9 +29,7 @@ void Storage::read_text(const String& filename) {
 
 void Storage::write_text(const String& filename, const String& content) {
     if (!ready) return;
-    Serial.print("Write ");
-    Serial.print(filename);
-    Serial.print(" ... ");
+    Serial.print(String("Write ") + filename + " ... ");
     File file = SD.open(filename, FILE_WRITE);
     if (!file) {
         Serial.println("opening file failed!");
@@ -49,9 +45,7 @@ void Storage::write_text(const String& filename, const String& content) {
 
 void Storage::remove(const String& filename) {
     if (!ready) return;
-    Serial.print("Delete ");
-    Serial.print(filename);
-    Serial.print(" ... ");
+    Serial.print(String("Delete ") + filename + " ... ");
     SD.remove(filename);
     if (SD.exists(filename)) {
         Serial.println("failed!");
