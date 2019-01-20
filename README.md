@@ -1,3 +1,5 @@
+[![BCH compliance](https://bettercodehub.com/edge/badge/dixx/throwaway-camera-upgrade?branch=master)](https://bettercodehub.com/)
+
 # throwaway-camera-upgrade
 I want to upgrade a disposable underwater camera using ESP8266.
 
