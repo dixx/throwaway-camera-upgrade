@@ -1,7 +1,5 @@
-.pioenvs
-.piolibdeps
 .clang_complete
 .gcc-flags.json
+.pio*
 src/my_secrets.h
 platformio.ini
-.travis.yml

@@ -1,3 +1,5 @@
+[![BCH compliance](https://bettercodehub.com/edge/badge/dixx/throwaway-camera-upgrade?branch=master)](https://bettercodehub.com/)
+
 # throwaway-camera-upgrade
 I want to upgrade a disposable underwater camera using ESP8266.
 
@@ -35,7 +37,7 @@ The wind-up wheel on the housing can be used to
 An additional reed switch within the housing could be used to
 - activate Wifi
 
-The internal flash is too energy-consuming, so we leave it be.
+The internal flash light is too energy-consuming, so we leave it be.
 
 A step-up-converter can be used to provide 5V stable, driven by a 9V rechargeable battery.
 
