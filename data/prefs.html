@@ -8,7 +8,7 @@
     <meta name="generator" content="Atom">
     <meta name="subject" content="Reanimation of a disposable underwater camera">
     <meta name="rating" content="General">
-    <title>Fotoknips Fotos</title>
+    <title>Fotoknips Einstellungen</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -42,17 +42,53 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="/">Fotos<span class="sr-only">(current)</span></a></li>
-            <li><a href="/prefs">Einstellungen</a></li>
+            <li><a href="/">Fotos</a></li>
+            <li class="active"><a href="/prefs">Einstellungen<span class="sr-only">(current)</span></a></li>
             <li><a href="/stats">Statistiken</a></li>
             <li><a href="/update">Software Update</a></li>
           </ul>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Fotoknips</h1>
+          <h1 class="page-header">Einstellungen</h1>
           <div class="row">
             <div class="content">
+              <!-- "<FORM action=\"/\" method=\"post\">"
+              "<P>"
+              "LED<br>"
+              "<INPUT type=\"radio\" name=\"LED\" value=\"1\">On<BR>"
+              "<INPUT type=\"radio\" name=\"LED\" value=\"0\">Off<BR>"
+              "<INPUT type=\"submit\" value=\"Send\"> <INPUT type=\"reset\">"
+              "</P>"
+              "</FORM>" -->
+              <form>
+                <table id="pins">
+                  <tr>
+                    <th>Pin</th>
+                    <th>Zustand</th>
+                  </tr>
+                  <tr id="D1">
+                    <td>D1</td>
+                    <td align="center">
+                      <label class="switch">
+                        <input type="checkbox" name="PIN01" value="0">
+                        <span class="slider round"></span>
+                      </label>
+                    </td>
+                  </tr>
+                  <tr id="D2">
+                    <td>D2</td>
+                    <td align="center">
+                      <label class="switch">
+                        <input type="checkbox" name="PIN02" value="0">
+                        <span class="slider round"></span>
+                      </label>
+                    </td>
+                  </tr>
+                </table>
+                <input type="submit" value="Anwenden">
+                <input type="reset">
+              </form>
             </div>
           </div>
         </div>
