@@ -24,14 +24,12 @@ namespace webserver {
         if (
             (var == "PICS_ACTIVE" && active_page == "Fotos") ||
             (var == "PREFS_ACTIVE" && active_page == "Einstellungen") ||
-            (var == "STATS_ACTIVE" && active_page == "Statistiken") ||
             (var == "UPDATE_ACTIVE" && active_page == "Update")
         )
             return " class=\"active\"";
         if (
             (var == "PICS_MARKED" && active_page == "Fotos") ||
             (var == "PREFS_MARKED" && active_page == "Einstellungen") ||
-            (var == "STATS_MARKED" && active_page == "Statistiken") ||
             (var == "UPDATE_MARKED" && active_page == "Update")
         )
             return "<span class=\"sr-only\">(current)</span>";
@@ -42,12 +40,12 @@ namespace webserver {
         return String();
     }
 
-    void handlePics(AsyncWebServerRequest *request) {
+    void handleGetPics(AsyncWebServerRequest *request) {
         active_page = "Fotos";
         request->send(SPIFFS, "/index.html", String(), false, processor);
     }
 
-    void handleSubmit() {
+    void handleUpdatePrefs() {
       // String LEDvalue;
       //
       // LEDvalue = server.arg("PINS");
@@ -64,24 +62,19 @@ namespace webserver {
       // }
     }
 
-    void handlePrefs(AsyncWebServerRequest *request) {
+    void handleGetPrefs(AsyncWebServerRequest *request) {
         // if (server.hasArg("PIN01"))
-        //   handleSubmit();
+        //   handleUpdatePrefs();
         active_page = "Einstellungen";
         request->send(SPIFFS, "/index.html", String(), false, processor);
     }
 
-    void handleStats(AsyncWebServerRequest *request) {
-        active_page = "Statistiken";
-        request->send(SPIFFS, "/index.html", String(), false, processor);
-    }
-
-    void handleUpdate(AsyncWebServerRequest *request) {
+    void handleGetUpdate(AsyncWebServerRequest *request) {
         active_page = "Update";
         request->send(SPIFFS, "/index.html", String(), false, processor);
     }
 
-    void handleStyle(AsyncWebServerRequest *request) {
+    void handleGetStyle(AsyncWebServerRequest *request) {
         request->send(SPIFFS, "/style.css", String(), false, processor);
     }
 
@@ -102,12 +95,11 @@ namespace webserver {
     }
 
     void addHandles() {
-        server.on("/", HTTP_GET, handlePics);
-        server.on("/index.html", HTTP_GET, handlePics);
-        server.on("/prefs", HTTP_GET, handlePrefs);
-        server.on("/stats", HTTP_GET, handleStats);
-        server.on("/update", HTTP_GET, handleUpdate);
-        server.on("/style.css", HTTP_GET, handleStyle);
+        server.on("/", HTTP_GET, handleGetPics);
+        server.on("/index.html", HTTP_GET, handleGetPics);
+        server.on("/prefs", HTTP_GET, handleGetPrefs);
+        server.on("/update", HTTP_GET, handleGetUpdate);
+        server.on("/style.css", HTTP_GET, handleGetStyle);
         server.onNotFound(handleNotFound);
     }
 
