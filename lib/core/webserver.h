@@ -2,41 +2,49 @@
 #define CORE_WEBSERVER_H
 
 #include "Arduino.h"
-#include <ESP8266WebServer.h>
+#include "ESPAsyncWebServer.h"
+#include "ESP8266mDNS.h"
 #include "internal_file_system.h"
 #include "serial.h"
 #include "wifi.h"
+#include "my_secrets.h" // TODO: add login page
 
 namespace webserver {
     namespace {
         bool ready = false;
+        String active_page = "Fotos";
     }
 
-    ESP8266WebServer server(80);
+    AsyncWebServer server(80);
 
-    String getContentType(const String& filename) { // convert the file extension to the MIME type
-        if (filename.endsWith(".html")) return "text/html";
-        else if (filename.endsWith(".css")) return "text/css";
-        else if (filename.endsWith(".jpg")) return "image/jpeg";
-        return "text/plain";
-    }
-
-    bool sendFileContent(String path) {
-        if (path.endsWith("/")) path += "index.html"; // If a folder is requested, send the index file
-        const String contentType = getContentType(path);
-        if (SPIFFS.exists(path)) {
-            File file = SPIFFS.open(path, "r");
-            server.streamFile(file, contentType);
-            file.close();
-            return true;
+    String processor(const String& var)
+    {
+        if (var == "PAGE_NAME")
+            return active_page;
+        if (
+            (var == "PICS_ACTIVE" && active_page == "Fotos") ||
+            (var == "PREFS_ACTIVE" && active_page == "Einstellungen") ||
+            (var == "STATS_ACTIVE" && active_page == "Statistiken") ||
+            (var == "UPDATE_ACTIVE" && active_page == "Update")
+        )
+            return " class=\"active\"";
+        if (
+            (var == "PICS_MARKED" && active_page == "Fotos") ||
+            (var == "PREFS_MARKED" && active_page == "Einstellungen") ||
+            (var == "STATS_MARKED" && active_page == "Statistiken") ||
+            (var == "UPDATE_MARKED" && active_page == "Update")
+        )
+            return "<span class=\"sr-only\">(current)</span>";
+        if (var == "CONTENT") {
+            if (active_page == "Einstellungen")
+                return spiffs::readTextFile("/_prefs.html");
         }
-        Serial.print("\tFile Not Found: ");
-        Serial.println(path);
-        return false;
+        return String();
     }
 
-    void handlePics() {
-        sendFileContent("/");
+    void handlePics(AsyncWebServerRequest *request) {
+        active_page = "Fotos";
+        request->send(SPIFFS, "/index.html", String(), false, processor);
     }
 
     void handleSubmit() {
@@ -54,33 +62,53 @@ namespace webserver {
       // else {
       //   returnFail("Bad LED value");
       // }
-      sendFileContent("/");
     }
 
-    void handlePrefs() {
-        if (server.hasArg("PIN01"))
-          handleSubmit();
-        sendFileContent("/prefs.html");
+    void handlePrefs(AsyncWebServerRequest *request) {
+        // if (server.hasArg("PIN01"))
+        //   handleSubmit();
+        active_page = "Einstellungen";
+        request->send(SPIFFS, "/index.html", String(), false, processor);
     }
 
-    void handleStats() {
-        sendFileContent("/stats.html");
+    void handleStats(AsyncWebServerRequest *request) {
+        active_page = "Statistiken";
+        request->send(SPIFFS, "/index.html", String(), false, processor);
     }
 
-    void handleNotFound() {
-        if (!sendFileContent(server.uri())) {
-            String message = "File Not Found\n\nURI: ";
-            message += server.uri();
-            message += "\nMethod: ";
-            message += (server.method() == HTTP_GET) ? "GET" : "POST";
-            message += "\nArguments: ";
-            message += server.args();
-            message += "\n";
-            for (uint8_t i = 0; i < server.args(); i++) {
-              message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
-            }
-            server.send(404, "text/plain", message);
+    void handleUpdate(AsyncWebServerRequest *request) {
+        active_page = "Update";
+        request->send(SPIFFS, "/index.html", String(), false, processor);
+    }
+
+    void handleStyle(AsyncWebServerRequest *request) {
+        request->send(SPIFFS, "/style.css", String(), false, processor);
+    }
+
+    void handleNotFound(AsyncWebServerRequest *request) {
+        Serial.println("Web Request not found.");
+        String message = "-- File Not Found: ";
+        message += request->url();
+        message += "\n   Method: ";
+        message += (request->method() == HTTP_GET) ? "GET" : "POST";
+        message += "\n   Arguments: ";
+        message += request->args();
+        message += "\n";
+        for (uint8_t i = 0; i < request->args(); i++) {
+            message += "   - " + request->argName(i) + ": " + request->arg(i) + "\n";
         }
+        Serial.println(message);
+        // request->send(404, "text/plain", message); // TODO: add 404 page
+    }
+
+    void addHandles() {
+        server.on("/", HTTP_GET, handlePics);
+        server.on("/index.html", HTTP_GET, handlePics);
+        server.on("/prefs", HTTP_GET, handlePrefs);
+        server.on("/stats", HTTP_GET, handleStats);
+        server.on("/update", HTTP_GET, handleUpdate);
+        server.on("/style.css", HTTP_GET, handleStyle);
+        server.onNotFound(handleNotFound);
     }
 
     void init() {
@@ -88,10 +116,10 @@ namespace webserver {
         serial::init();
         spiffs::init();
         wifi::init();
-        server.on("/", handlePics);
-        server.on("/prefs", handlePrefs);
-        server.on("/stats", handleStats);
-        server.onNotFound(handleNotFound);
+        MDNS.addService("http", "tcp", 80);
+        addHandles();
+        server.begin();
+        Serial.println("Web Server ready.");
         ready = true;
     }
 }

@@ -8,7 +8,7 @@
     <meta name="generator" content="Atom">
     <meta name="subject" content="Reanimation of a disposable underwater camera">
     <meta name="rating" content="General">
-    <title>Fotoknips Fotos</title>
+    <title>Fotoknips %PAGE_NAME%</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -42,17 +42,18 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="/">Fotos<span class="sr-only">(current)</span></a></li>
-            <li><a href="/prefs">Einstellungen</a></li>
-            <li><a href="/stats">Statistiken</a></li>
-            <li><a href="/update">Software Update</a></li>
+            <li%PICS_ACTIVE%><a href="/">Fotos%PICS_MARKED%</a></li>
+            <li%PREFS_ACTIVE%><a href="/prefs">Einstellungen%PREFS_MARKED%</a></li>
+            <li%STATS_ACTIVE%><a href="/stats">Statistiken%STATS_MARKED%</a></li>
+            <li%UPDATE_ACTIVE%><a href="/update">Software Update%UPDATE_MARKED%</a></li>
           </ul>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Fotoknips</h1>
+          <h1 class="page-header">%PAGE_NAME%</h1>
           <div class="row">
             <div class="content">
+              %CONTENT%
             </div>
           </div>
         </div>

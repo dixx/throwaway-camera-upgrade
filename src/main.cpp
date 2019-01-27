@@ -5,7 +5,7 @@
 Storage storage;
 
 void setup() {
-    webupdater::init();
+    webserver::init();
     storage.init();
     if (storage.is_ready()) {
         storage.write_text("example.txt", "This is a test.\näöüß\n\tè^°");
@@ -15,5 +15,4 @@ void setup() {
 }
 
 void loop() {
-    webserver::server.handleClient();
 }
